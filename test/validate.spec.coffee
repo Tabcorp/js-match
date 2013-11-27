@@ -121,7 +121,7 @@ describe 'validate', ->
       errors[0].should.match /person\.address is required/
 
 
-  describe 'arrays', ->
+  describe 'arrays of objects', ->
 
     schema =
       items: [
@@ -129,7 +129,7 @@ describe 'validate', ->
         price: { match: 'number' }
       ]
   
-    it 'valid items', ->
+    it 'valid items (objects)', ->
       object =
         items: [
           { name: 'pen',    price: 1 }
@@ -153,5 +153,20 @@ describe 'validate', ->
       errors = validate object, schema
       errors[0].should.match /items\.name should be a string/
       errors[1].should.match /items\.price should be a number/
-  
  
+  describe 'arrays of primitives', ->
+
+    schema =
+      items: [{ match: 'number' }]
+  
+    it 'valid items', ->
+      object =
+        items: [1, 2, 3]
+      errors = validate object, schema
+      errors.should.eql []
+
+    it 'invalid items', ->
+      object =
+        items: [1, 'foo', 3]
+      errors = validate object, schema
+      errors[0].should.match /items should be a number, but foo is a string/

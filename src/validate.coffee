@@ -10,6 +10,10 @@ validateField = (path, value, spec) ->
   else m(path, value)
 
 validateHierarchy = (path, obj, schema) ->
+  # Testing primitives (no keys)
+  if schema.match
+    return validateField path, obj, schema
+  # If the schema has object keys
   return _.map schema, (spec, key) ->
     fullPath = if path then "#{path}.#{key}" else key
     # Leaf specification
