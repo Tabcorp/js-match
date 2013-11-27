@@ -10,10 +10,12 @@ jsm = require 'js-match'
 person =
   name: { match: 'string' }
   age:  { match: 'number' }
- 
+
+# success
 errors = jsm.validate {name: 'Bob', age: 30}, person
 errors.should.eql []
 
+# failure
 errors = jsm.validate {age: 'foo'}, person
 errors.should.eql [
   'name is required',
@@ -63,7 +65,7 @@ Validation will ignore missing optional fields, but will run the matcher if an o
 
 ## Nested configs
 
-`js-match` supports nested objects and arrays:
+`js-match` supports nested objects, arrays, and primitives:
 
 ```coffee
 jsm.validate
@@ -95,7 +97,7 @@ which matches the following object:
 }
 ```
 
-If any, the errors will be printed with fully qualified paths, for ex:
+Any errors will be returned with fully qualified paths, for ex:
 
 ```js
 [
