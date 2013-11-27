@@ -74,6 +74,9 @@ jsm.validate
     host:  { match: 'string' }
     port:  { match: 'number' }
   ]
+  values: [
+    { match: 'number' }
+  ]
 ```
 
 which matches the following object:
@@ -87,7 +90,8 @@ which matches the following object:
   "machines": [
     { "host": "serverX", "port": 3000 },
     { "host": "serverY", "port": 3000 }
-  ]
+  ],
+  "values": [1, 2, 3, 4, 5]
 }
 ```
 
@@ -96,6 +100,7 @@ If any, the errors will be printed with fully qualified paths, for ex:
 ```js
 [
   'credentials.user is required',
-  'machines.host should be a string, but 1234 is a number'
+  'machines[1].host should be a string, but 1234 is a number',
+  'values[3] should be a number, but true is a boolean'
 ]
 ```
