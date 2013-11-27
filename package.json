@@ -1,0 +1,22 @@
+{
+  "name": "js-match",
+  "version": "0.0.1",
+  "description": "Validates an entire Javascript object against a set of nested matchers",
+  "main": "src/index.coffee",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "coffee-script": "~1.6.3",
+    "underscore": "~1.5.2"
+  },
+  "devDependencies": {
+    "mocha": "~1.14.0",
+    "should": "~2.1.0"
+  }
+}
