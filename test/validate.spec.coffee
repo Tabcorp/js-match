@@ -151,8 +151,8 @@ describe 'validate', ->
           { name: 10000,    price: 'foo' }
         ]
       errors = validate object, schema
-      errors[0].should.match /items\.name should be a string/
-      errors[1].should.match /items\.price should be a number/
+      errors[0].should.match /items\[1\]\.name should be a string/
+      errors[1].should.match /items\[1\]\.price should be a number/
  
   describe 'arrays of primitives', ->
 
@@ -169,4 +169,4 @@ describe 'validate', ->
       object =
         items: [1, 'foo', 3]
       errors = validate object, schema
-      errors[0].should.match /items should be a number, but foo is a string/
+      errors[0].should.match /items\[1\] should be a number, but foo is a string/

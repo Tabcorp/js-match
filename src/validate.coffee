@@ -26,7 +26,7 @@ validateHierarchy = (path, obj, schema) ->
     if util.isArray spec
       if not util.isArray obj[key]
         return "#{fullPath} should be an array"
-      return obj[key].map (val) -> validateHierarchy fullPath, val, spec[0]
+      return obj[key].map (val, i) -> validateHierarchy "#{fullPath}[#{i}]", val, spec[0]
     # Nested schema = object
     return validateHierarchy fullPath, obj[key], spec
 
