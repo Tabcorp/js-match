@@ -1,3 +1,4 @@
+fs  = require 'fs'
 url = require 'url'
 
 matchType = (type) ->
@@ -18,6 +19,9 @@ matchUrl = (path, val) ->
   valid = u.protocol and u.host and u.path
   if not valid then return "#{path} should be an IP, but #{val} is not valid"
 
+matchFile = (path, val) ->
+  exists = fs.existsSync val
+  if not exists then return "#{path} should be a valid file, but #{val} does not exist"
 
 
 module.exports =
@@ -30,3 +34,4 @@ module.exports =
   # advanced validations
   ip: matchIp
   url: matchUrl
+  file: matchFile
