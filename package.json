@@ -2,15 +2,16 @@
   "name": "js-match",
   "version": "0.0.2",
   "description": "Validates an entire Javascript object against a set of nested matchers",
-  "main": "src/index.coffee",
-  "directories": {
-    "test": "test"
+  "author": "Tabcorp Digital Technology Team",
+  "license": "Copyright TabCorp Pty Ltd 2013",
+  "repository" : {
+    "type": "git",
+    "url": "https://github.com/TabDigital/js-match.git"
   },
+  "main": "src/index.coffee",
   "scripts": {
     "test": "./node_modules/.bin/mocha"
   },
-  "author": "Tabcorp Digital Technology Team",
-  "license": "Copyright TabCorp Pty Ltd 2013",
   "dependencies": {
     "coffee-script": "~1.6.3",
     "underscore": "~1.5.2"
