@@ -1,6 +1,6 @@
 {
   "name": "js-match",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Validates an entire Javascript object against a set of nested matchers",
   "main": "src/index.coffee",
   "directories": {
