@@ -9,8 +9,8 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha"
   },
-  "author": "",
-  "license": "BSD-2-Clause",
+  "author": "Tabcorp Digital Technology Team",
+  "license": "Copyright TabCorp Pty Ltd 2013",
   "dependencies": {
     "coffee-script": "~1.6.3",
     "underscore": "~1.5.2"
