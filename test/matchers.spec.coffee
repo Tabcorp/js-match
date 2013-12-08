@@ -31,6 +31,15 @@ describe 'matchers', ->
     it 'invalid (not string)',  -> m.ip(path, 10).should.match /string/
     it 'invalid (format)',      -> m.ip(path, '10.hello.3').should.match /not valid/
 
+  describe 'host', ->
+    
+    it 'valid (ip)',            -> should.not.exist m.host(path, '10.0.13.6')
+    it 'valid (hostname 1)',    -> should.not.exist m.host(path, 'my.long.host.name.local')
+    it 'valid (hostname 2)',    -> should.not.exist m.host(path, 'with.valid987.digits-and-dashes')
+    it 'invalid (not string)',  -> m.host(path, 10).should.match /string/
+    it 'invalid (format 1)',    -> m.host(path, 'hey..cool..host').should.match /not valid/
+    it 'invalid (format 2)',    -> m.host(path, 'funny!characters~').should.match /not valid/
+
   describe 'url', ->
     
     it 'valid (http)',          -> should.not.exist m.url(path, 'http://www.google.com')
