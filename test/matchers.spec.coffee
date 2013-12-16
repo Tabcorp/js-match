@@ -54,4 +54,13 @@ describe 'matchers', ->
     it 'exists',                -> should.not.exist m.file(path, 'package.json')
     it 'doest not exist',       -> m.file(path, 'package.something').should.match /does not exist/
 
+  describe 'money', ->
+    
+    it 'valid (2dp)',           -> should.not.exist m.money(path, '$12.00')
+    it 'valid (1dp)',           -> should.not.exist m.money(path, '$12.5')
+    it 'valid (0dp)',           -> should.not.exist m.money(path, '$12')
+    it 'invalid (not string)',  -> m.money(path, 12).should.match /string/
+    it 'invalid (3dp)',         -> m.money(path, '$12.500').should.match /not valid/
+
+
 
