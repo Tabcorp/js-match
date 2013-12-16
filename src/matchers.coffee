@@ -7,6 +7,7 @@ url = require 'url'
 
 REGEX_IP = /^(\d{1,3}.){3}\d{1,3}$/
 REGEX_HOST = /^([a-z0-9\-]+\.?)+$/i
+REGEX_MONEY =  /^\$?[\d]+(\.\d{1,2})?$/
 
 matchType = (type) ->
   (path, val) ->
@@ -34,6 +35,9 @@ matchFile = (path, val) ->
   exists = fs.existsSync val
   if not exists then return "#{path} should be a valid file, but #{val} does not exist"
 
+matchMoney = (path, val) ->
+  if typeof val != 'string' then return  "#{path} should be money, but #{val} is not a string"
+  if not val.match REGEX_MONEY then return "#{path} should be money e.g '$10.00', but #{val} is not valid"
 
 module.exports =
   
@@ -47,3 +51,4 @@ module.exports =
   host: matchHost
   url: matchUrl
   file: matchFile
+  money: matchMoney
