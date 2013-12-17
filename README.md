@@ -33,7 +33,7 @@ Values can be tested against a default set of matchers, for ex:
 { match: 'boolean' }
 { match: 'ip'      }
 { match: 'url'     }
-{ match: 'money'     }
+{ match: 'money'   }
 ```
 
 You can also register custom matchers for advanced logic:
