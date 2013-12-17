@@ -48,6 +48,17 @@ jsm.validate object,
   uniqueId: { match: 'guid'   }
 ```
 
+Matchers can also take optional parameters:
+
+```coffee
+jsm.matchers['age'] = (path, value, options) ->
+  if value < options.min or value > options.max
+    return "#{path} should be an age between #{options.min} and #{options.max}, but was #{value}"
+
+jsm.validate object,
+  name:  { match: 'string' }
+  age:   { match: 'age', min: 1, max: 100 }
+```
 
 ## Required
 

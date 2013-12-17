@@ -65,7 +65,7 @@ describe 'validate', ->
 
   describe 'custom matchers', ->
 
-    matchers['bigNumber'] = (key, val) -> if val < 1000 then "#{val} is not very big"
+    matchers['bigNumber'] = (path, val) -> if val < 1000 then "#{val} is not very big"
 
     it 'valid with custom matcher', ->
       schema = num: { match: 'bigNumber' }
@@ -82,6 +82,13 @@ describe 'validate', ->
       errors = validate {num: 999}, schema
       errors[0].should.match /matcher something is not defined/
 
+    it 'can pass extra options to a matcher', ->
+      matchers['score'] = (path, val, opts) ->
+        if val < opts.min
+          "#{path} should be a score >= #{opts.min} but was #{val}"
+      schema = num: { match: 'score', min: 5 }
+      validate({num: 3}, schema).should.eql ['num should be a score >= 5 but was 3']
+      validate({num: 7}, schema).should.eql []
 
   describe 'hierarchies', ->
     
