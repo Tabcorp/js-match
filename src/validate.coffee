@@ -3,7 +3,7 @@ util      = require 'util'
 matchers  = require './matchers'
 
 validateField = (path, value, spec) ->
-  if value == undefined
+  if not value?
     return (if spec.optional then null else "#{path} is required")
   m = matchers[spec.match]
   if not m then "Invalid schema: matcher #{spec.match} is not defined"
