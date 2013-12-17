@@ -34,6 +34,12 @@ describe 'validate', ->
       errors = validate object, schema
       errors.should.eql []
 
+    it 'when null', ->
+      object = message: null
+      schema = message: { match: 'string', optional: true }
+      errors = validate object, schema
+      errors.should.eql []
+
     it 'still validate if present', ->
       object = message: 42
       schema = message: { match: 'string', optional: true }
