@@ -7,7 +7,7 @@ validateField = (path, value, spec) ->
     return (if spec.optional then null else "#{path} is required")
   m = matchers[spec.match]
   if not m then "Invalid schema: matcher #{spec.match} is not defined"
-  else m(path, value)
+  else m(path, value, spec)
 
 validateHierarchy = (path, obj, schema) ->
   # Testing primitives (no keys)
