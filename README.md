@@ -38,7 +38,9 @@ Values can be tested against a default set of matchers, for ex:
 { match: 'number'  }
 { match: 'boolean' }
 { match: 'ip'      }
+{ match: 'host'    }
 { match: 'url'     }
+{ match: 'file'    }
 { match: 'money'   }
 ```
 
