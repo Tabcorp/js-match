@@ -1,6 +1,12 @@
 # js-match
 
 Validates an entire Javascript object against a set of nested matchers.
+This can be useful to quickly validate:
+
+- a JSON config file
+- the structure of an HTTP request payload
+
+*Note:* `js-match` will always ignore extra fields, as long as the set of matchers passes. This conforms with the robustness principle of "be conservative in what you do, be liberal in what you accept".
 
 ## Basic usage
 
