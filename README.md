@@ -75,12 +75,12 @@ Fields can be manually marked as optional:
 
 ```coffee
 jsm.validate object,
-  host: { match: 'url' }
-  user: { match: 'string', optional: true }
-  pass: { match: 'string', optional: true }
+  username: { match: 'string' }
+  password: { match: 'string', optional: true }
 ```
 
 Validation will ignore missing optional fields, but will run the matcher if an optional field is present.
+E.g. it won't complain if `password` isn't there, but will if `password` is a number.
 
 
 ## Nested configs
