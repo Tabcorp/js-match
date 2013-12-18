@@ -54,13 +54,13 @@ describe 'matchers', ->
     it 'exists',                -> should.not.exist m.file('package.json')
     it 'doest not exist',       -> m.file('package.something').should.eql 'should be an existing file path'
 
-  describe 'money', ->
+  describe 'dollars', ->
     
-    it 'valid (2dp)',           -> should.not.exist m.money('$12.00')
-    it 'valid (1dp)',           -> should.not.exist m.money('$12.5')
-    it 'valid (0dp)',           -> should.not.exist m.money('$12')
-    it 'invalid (not string)',  -> m.money(12).should.eql 'should be a dollar amount'
-    it 'invalid (3dp)',         -> m.money('$12.500').should.eql 'should be a dollar amount'
+    it 'valid (2dp)',           -> should.not.exist m.dollars('$12.00')
+    it 'valid (1dp)',           -> should.not.exist m.dollars('$12.5')
+    it 'valid (0dp)',           -> should.not.exist m.dollars('$12')
+    it 'invalid (not string)',  -> m.dollars(12).should.eql 'should be a dollar amount'
+    it 'invalid (3dp)',         -> m.dollars('$12.500').should.eql 'should be a dollar amount'
 
 
 

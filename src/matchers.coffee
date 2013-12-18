@@ -5,9 +5,9 @@ url = require 'url'
 # Some checks are clearly not as restrictive as the RFC
 # but are probably enough for most quick validations
 
-REGEX_IP = /^(\d{1,3}.){3}\d{1,3}$/
-REGEX_HOST = /^([a-z0-9\-]+\.?)+$/i
-REGEX_MONEY =  /^\$?[\d]+(\.\d{1,2})?$/
+REGEX_IP      = /^(\d{1,3}.){3}\d{1,3}$/
+REGEX_HOST    = /^([a-z0-9\-]+\.?)+$/i
+REGEX_DOLLARS = /^\$?[\d]+(\.\d{1,2})?$/
 
 matchType = (type) ->
   (val) ->
@@ -33,8 +33,8 @@ matchFile = (val) ->
   if not fs.existsSync(val)
     "should be an existing file path"
 
-matchMoney = (val) ->
-  if (typeof val != 'string') or (not val.match REGEX_MONEY )
+matchDollars = (val) ->
+  if (typeof val != 'string') or (not val.match REGEX_DOLLARS )
     #TODO have a way of giving examples of valid values (e.g. $10.00)
     'should be a dollar amount'
 
@@ -51,4 +51,4 @@ module.exports =
   host: matchHost
   url: matchUrl
   file: matchFile
-  money: matchMoney
+  dollars: matchDollars

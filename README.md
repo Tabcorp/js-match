@@ -41,7 +41,7 @@ Values can be tested against a default set of matchers, for ex:
 { match: 'host'    }
 { match: 'url'     }
 { match: 'file'    }
-{ match: 'money'   }
+{ match: 'dollars' }
 ```
 
 You can also register custom matchers for advanced logic:
