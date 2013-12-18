@@ -10,34 +10,34 @@ REGEX_HOST = /^([a-z0-9\-]+\.?)+$/i
 REGEX_MONEY =  /^\$?[\d]+(\.\d{1,2})?$/
 
 matchType = (type) ->
-  (path, val) ->
-    if typeof val != type
-      "#{path} should be a #{type}, but #{val} is a #{typeof val}"
-    else
-      null
+  (val) ->
+    if typeof val != type then "should be a #{type}"
+    else null
 
-matchIp = (path, val) ->
-  if typeof val != 'string' then return "#{path} should be an IP, but #{val} is not a string"
-  if not val.match(REGEX_IP) then return "#{path} should be an IP, but #{val} is not valid"
+matchIp = (val) ->
+  if (typeof val != 'string') or (not val.match REGEX_IP)
+    "should be an IP"
 
-matchHost = (path, val) ->
-  if typeof val != 'string' then return "#{path} should be a hostname, but #{val} is not a string"
+matchHost = (val) ->
+  if typeof val != 'string' then return "should be a host"
   valid = val.match(REGEX_IP) or val.match(REGEX_HOST) or val == 'localhost'
-  if not valid then return "#{path} should be an hostname, but #{val} is not valid"
+  if not valid then return "should be a host"
 
-matchUrl = (path, val) ->
-  if typeof val != 'string' then return  "#{path} should be a URL, but #{val} is not a string"
+matchUrl = (val) ->
+  if typeof val != 'string' then return  "should be a URL"
   u = url.parse val
   valid = u.protocol and u.host and u.path
-  if not valid then return "#{path} should be an IP, but #{val} is not valid"
+  if not valid then return "should be a URL"
 
-matchFile = (path, val) ->
-  exists = fs.existsSync val
-  if not exists then return "#{path} should be a valid file, but #{val} does not exist"
+matchFile = (val) ->
+  if not fs.existsSync(val)
+    "should be an existing file path"
 
-matchMoney = (path, val) ->
-  if typeof val != 'string' then return  "#{path} should be money, but #{val} is not a string"
-  if not val.match REGEX_MONEY then return "#{path} should be money e.g '$10.00', but #{val} is not valid"
+matchMoney = (val) ->
+  if (typeof val != 'string') or (not val.match REGEX_MONEY )
+    #TODO have a way of giving examples of valid values (e.g. $10.00)
+    'should be a dollar amount'
+
 
 module.exports =
   
