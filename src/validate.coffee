@@ -4,10 +4,13 @@ matchers  = require './matchers'
 
 validateField = (path, value, spec) ->
   if not value?
-    return (if spec.optional then null else "#{path} is required")
+    return (if spec.optional then null else {path: path, error: 'required'})
   m = matchers[spec.match]
-  if not m then "Invalid schema: matcher #{spec.match} is not defined"
-  else m(path, value, spec)
+  if not m
+    {path: path, error: "matcher <#{spec.match}> is not defined"}
+  else
+    error = m(value, spec)
+    if error then {path, value, error} else null
 
 validateHierarchy = (path, obj, schema) ->
   # Testing primitives (no keys)
@@ -21,11 +24,11 @@ validateHierarchy = (path, obj, schema) ->
       return validateField fullPath, obj[key], spec
     # Nested schema = missing
     if not obj[key]
-      return "#{fullPath} is required"
+      return {path: fullPath, error: 'required'}
     # Nested schema = array
     if util.isArray spec
       if not util.isArray obj[key]
-        return "#{fullPath} should be an array"
+        return {path: fullPath, error: 'should be an array'}
       return obj[key].map (val, i) -> validateHierarchy "#{fullPath}[#{i}]", val, spec[0]
     # Nested schema = object
     return validateHierarchy fullPath, obj[key], spec

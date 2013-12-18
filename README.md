@@ -18,8 +18,8 @@ errors.should.eql []
 # failure
 errors = jsm.validate {age: 'foo'}, person
 errors.should.eql [
-  'name is required',
-  'age should be a number but foo is a string'
+  {path: 'name', error: 'required'},
+  {path: 'age',  value: 'foo', error: 'should be a number'}
 ]
 ```
 
@@ -39,9 +39,9 @@ Values can be tested against a default set of matchers, for ex:
 You can also register custom matchers for advanced logic:
 
 ```coffee
-jsm.matchers['guid'] = (path, value) ->
+jsm.matchers['guid'] = (value) ->
   if not value.match /[0-9a-f]{32}/i
-    return "#{path} should be a GUID, but was #{value}"
+    return "should be a GUID"
 
 jsm.validate object,
   name:     { match: 'string' }
@@ -51,9 +51,9 @@ jsm.validate object,
 Matchers can also take optional parameters:
 
 ```coffee
-jsm.matchers['age'] = (path, value, options) ->
+jsm.matchers['age'] = (value, options) ->
   if value < options.min or value > options.max
-    return "#{path} should be an age between #{options.min} and #{options.max}, but was #{value}"
+    return "should be an age between #{options.min} and #{options.max}"
 
 jsm.validate object,
   name:  { match: 'string' }
@@ -113,8 +113,8 @@ Any errors will be returned with fully qualified paths, for ex:
 
 ```js
 [
-  'credentials.user is required',
-  'machines[1].host should be a string, but 1234 is a number',
-  'values[3] should be a number, but true is a boolean'
+  {path: 'credentials.user', error: 'required'},
+  {path: 'machines[1].host', value: 1234, error: 'should be a string'},
+  {path: 'values[3]', value: true, error: 'should be a number'}
 ]
 ```
