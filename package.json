@@ -1,6 +1,6 @@
 {
   "name": "js-match",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Validates an entire Javascript object against a set of nested matchers",
   "author": "Tabcorp Digital Technology Team",
   "license": "Copyright TabCorp Pty Ltd 2013",
