@@ -62,11 +62,11 @@ describe 'matchers', ->
     it 'invalid (not string)',  -> m.dollars(12).should.eql 'should be a dollar amount'
     it 'invalid (3dp)',         -> m.dollars('$12.500').should.eql 'should be a dollar amount'
 
-  describe 'UUID v4', ->
-    it 'valid (test 1)',             -> should.not.exist m['UUID-v4']('3c8a90dd-11b8-47c3-a88e-67e92b097c7a')
-    it 'valid (test 2)',             -> should.not.exist m['UUID-v4']('89c34fa1-0be5-45f6-80a3-84b962f0c699')
-    it 'invalid (not string)',       -> m['UUID-v4'](123).should.include 'should be a UUID Version 4'
-    it 'invalid (wrong format)',     -> m['UUID-v4']('89c34fa10be545f680a384b962f0c699').should.include 'should be a UUID Version 4'
-    it 'invalid (version number)',   -> m['UUID-v4']('89c34fa1-0be5-15f6-80a3-84b962f0c699').should.include 'should be a UUID Version 4'
-    it 'invalid (reserved bits)',    -> m['UUID-v4']('89c34fa1-0be5-45f6-70a3-84b962f0c699').should.include 'should be a UUID Version 4'
+  describe 'UUID version 4', ->
+    it 'valid (test 1)',             -> should.not.exist m['uuid-v4']('3c8a90dd-11b8-47c3-a88e-67e92b097c7a')
+    it 'valid (test 2)',             -> should.not.exist m['uuid-v4']('89c34fa1-0be5-45f6-80a3-84b962f0c699')
+    it 'invalid (not string)',       -> m['uuid-v4'](123).should.include 'should be a UUID Version 4'
+    it 'invalid (wrong format)',     -> m['uuid-v4']('89c34fa10be545f680a384b962f0c699').should.include 'should be a UUID Version 4'
+    it 'invalid (version number)',   -> m['uuid-v4']('89c34fa1-0be5-15f6-80a3-84b962f0c699').should.include 'should be a UUID Version 4'
+    it 'invalid (reserved bits)',    -> m['uuid-v4']('89c34fa1-0be5-45f6-70a3-84b962f0c699').should.include 'should be a UUID Version 4'
 

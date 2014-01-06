@@ -58,4 +58,4 @@ module.exports =
   'url':     matchUrl
   'file':    matchFile
   'dollars': matchDollars
-  'UUID-v4': uuidV4
+  'uuid-v4': uuidV4
