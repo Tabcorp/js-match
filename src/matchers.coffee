@@ -8,6 +8,7 @@ url = require 'url'
 REGEX_IP      = /^(\d{1,3}.){3}\d{1,3}$/
 REGEX_HOST    = /^([a-z0-9\-]+\.?)+$/i
 REGEX_DOLLARS = /^\$?[\d]+(\.\d{1,2})?$/
+REGEX_UUID_V4 = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
 
 matchType = (type) ->
   (val) ->
@@ -38,17 +39,23 @@ matchDollars = (val) ->
     #TODO have a way of giving examples of valid values (e.g. $10.00)
     'should be a dollar amount'
 
+uuidV4 = (val) ->
+  message = 'should be a UUID Version 4 (xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx)'
+  return message unless (typeof val is 'string')
+  return message unless val.match REGEX_UUID_V4
+
 
 module.exports =
   
   # basic JS types
-  string: matchType('string')
-  boolean: matchType('boolean')
-  number: matchType('number')
+  'string':  matchType('string')
+  'boolean': matchType('boolean')
+  'number':  matchType('number')
   
   # advanced validations
-  ip: matchIp
-  host: matchHost
-  url: matchUrl
-  file: matchFile
-  dollars: matchDollars
+  'ip':      matchIp
+  'host':    matchHost
+  'url':     matchUrl
+  'file':    matchFile
+  'dollars': matchDollars
+  'UUID-v4': uuidV4

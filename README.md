@@ -42,18 +42,19 @@ Values can be tested against a default set of matchers, for ex:
 { match: 'url'     }
 { match: 'file'    }
 { match: 'dollars' }
+{ match: 'UUID-v4' }
 ```
 
 You can also register custom matchers for advanced logic:
 
 ```coffee
-jsm.matchers['guid'] = (value) ->
-  if not value.match /[0-9a-f]{32}/i
-    return "should be a GUID"
+jsm.matchers['custom-id'] = (value) ->
+  if not value.match /[0-9a-f]{10}/i
+    return "should be an ID of the form 8d9f0ab3c5"
 
 jsm.validate object,
-  name:     { match: 'string' }
-  uniqueId: { match: 'guid'   }
+  name:     { match: 'string'    }
+  uniqueId: { match: 'custom-id' }
 ```
 
 Matchers can also take optional parameters:
