@@ -42,7 +42,7 @@ Values can be tested against a default set of matchers, for ex:
 { match: 'url'     }
 { match: 'file'    }
 { match: 'dollars' }
-{ match: 'UUID-v4' }
+{ match: 'uuid-v4' }
 ```
 
 You can also register custom matchers for advanced logic:
