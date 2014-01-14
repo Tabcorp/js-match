@@ -27,7 +27,7 @@ matchHost = (val) ->
 matchUrl = (val) ->
   if typeof val != 'string' then return  "should be a URL"
   u = url.parse val
-  valid = u.protocol and u.host and u.path
+  valid = u.protocol and u.host
   if not valid then return "should be a URL"
 
 matchFile = (val) ->

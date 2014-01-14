@@ -42,13 +42,14 @@ describe 'matchers', ->
 
   describe 'url', ->
     
-    it 'valid (scheme + host)', -> should.not.exist m.url('http://www.google.com')
-    it 'valid (optional port)', -> should.not.exist m.url('http://localhost:1234')
-    it 'valid (path + query)',  -> should.not.exist m.url('http://www.google.com/path/hello%20world?query+string')
-    it 'valid (auth)',          -> should.not.exist m.url('http://user:pass@server')
-    it 'valid (any scheme)',    -> should.not.exist m.url('postgres://host/database')
-    it 'invalid (not string)',  -> m.url(3).should.eql 'should be a URL'
-    it 'invalid (format)',      -> m.url('almost/a/url').should.eql 'should be a URL'
+    it 'valid (scheme + host)',    -> should.not.exist m.url('http://www.google.com')
+    it 'valid (optional port)',    -> should.not.exist m.url('http://localhost:1234')
+    it 'valid (path + query)',     -> should.not.exist m.url('http://www.google.com/path/hello%20world?query+string')
+    it 'valid (auth)',             -> should.not.exist m.url('http://user:pass@server')
+    it 'valid (any scheme)',       -> should.not.exist m.url('postgres://host/database')
+    it 'valid (no database name)', -> should.not.exist m.url('redis://localhost:6379')
+    it 'invalid (not string)',     -> m.url(3).should.eql 'should be a URL'
+    it 'invalid (format)',         -> m.url('almost/a/url').should.eql 'should be a URL'
 
   describe 'file', ->
     
