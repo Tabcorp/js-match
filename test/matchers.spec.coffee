@@ -46,10 +46,18 @@ describe 'matchers', ->
     it 'valid (optional port)',    -> should.not.exist m.url('http://localhost:1234')
     it 'valid (path + query)',     -> should.not.exist m.url('http://www.google.com/path/hello%20world?query+string')
     it 'valid (auth)',             -> should.not.exist m.url('http://user:pass@server')
-    it 'valid (any scheme)',       -> should.not.exist m.url('postgres://host/database')
-    it 'valid (no database name)', -> should.not.exist m.url('redis://localhost:6379')
+    it 'valid (any scheme)',       -> should.not.exist m.url('postgres://host/database')    
     it 'invalid (not string)',     -> m.url(3).should.eql 'should be a URL'
     it 'invalid (format)',         -> m.url('almost/a/url').should.eql 'should be a URL'
+    it 'invalid (no host)',        -> m.url('http://').should.eql 'should be a URL'
+    it 'invalid (no path)',        -> m.url('redis://localhost').should.eql 'should be a URL'
+
+  describe 'uri', ->
+
+    it 'valid (scheme + anything)', -> should.not.exist m.uri('redis://localhost:6379')    
+    it 'valid (no host name)'    , -> should.not.exist m.uri('pg:///')
+    it 'invalid (not string)',     -> m.uri(3).should.eql 'should be a URI'
+    it 'invalid (format)',         -> m.uri('almost/a/uri').should.eql 'should be a URI'  
 
   describe 'file', ->
     
