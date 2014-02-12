@@ -27,8 +27,14 @@ matchHost = (val) ->
 matchUrl = (val) ->
   if typeof val != 'string' then return  "should be a URL"
   u = url.parse val
-  valid = u.protocol and u.host
+  valid = u.protocol and u.host and u.pathname
   if not valid then return "should be a URL"
+
+matchUri = (val) ->
+  if typeof val != 'string' then return  "should be a URI"
+  u = url.parse val
+  valid = u.protocol
+  if not valid then return "should be a URI"  
 
 matchFile = (val) ->
   if not fs.existsSync(val)
@@ -56,6 +62,7 @@ module.exports =
   'ip':      matchIp
   'host':    matchHost
   'url':     matchUrl
+  'uri':     matchUri
   'file':    matchFile
   'dollars': matchDollars
   'uuid-v4': uuidV4

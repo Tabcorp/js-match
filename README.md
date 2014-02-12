@@ -40,6 +40,7 @@ Values can be tested against a default set of matchers, for ex:
 { match: 'ip'      }
 { match: 'host'    }
 { match: 'url'     }
+{ match: 'uri'     }
 { match: 'file'    }
 { match: 'dollars' }
 { match: 'uuid-v4' }
