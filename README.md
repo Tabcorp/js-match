@@ -1,5 +1,9 @@
 # js-match
 
+[![Build Status](https://travis-ci.org/TabDigital/js-match.svg?branch=master)](https://travis-ci.org/TabDigital/js-match)
+
+[![NPM](https://nodei.co/npm/js-match.png)](https://nodei.co/npm/js-match/)
+
 Validates an entire Javascript object against a set of nested matchers.
 This can be useful to quickly validate:
 
