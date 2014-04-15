@@ -7,7 +7,7 @@ describe 'validate', ->
 
 
   describe 'single field validation', ->
-    
+
     it 'valid property', ->
       object = message: 'hello'
       schema = message: { match: 'string' }
@@ -27,7 +27,7 @@ describe 'validate', ->
       errors[0].should.eql {path: 'message', error: 'required'}
 
   describe 'optional fields', ->
-  
+
     it 'when missing', ->
       object = message: undefined
       schema = message: { match: 'string', optional: true }
@@ -52,14 +52,14 @@ describe 'validate', ->
     schema =
       message: { match: 'string' }
       value:   { match: 'number' }
-    
+
     it 'multiple valid properties', ->
       object =
         message: 'hello'
         value: 3
       errors = validate object, schema
       errors.should.eql []
-  
+
     it 'multiple invalid properties', ->
       object =
         message: 42
@@ -97,14 +97,14 @@ describe 'validate', ->
       validate({num: 7}, schema).should.eql []
 
   describe 'hierarchies', ->
-    
+
     schema =
       person:
         age:         { match: 'number' }
         address:
           city:      { match: 'string' }
           postcode:  { match: 'number' }
-    
+
     it 'all valid fields', ->
       object =
         person:
@@ -141,7 +141,7 @@ describe 'validate', ->
         name:  { match: 'string' }
         price: { match: 'number' }
       ]
-  
+
     it 'valid items (objects)', ->
       object =
         items: [
@@ -150,7 +150,7 @@ describe 'validate', ->
         ]
       errors = validate object, schema
       errors.should.eql []
-  
+
     it 'invalid array object', ->
       object =
         items: { hello: 'world' }
@@ -166,12 +166,12 @@ describe 'validate', ->
       errors = validate object, schema
       errors[0].should.eql {path: 'items[1].name',  value: 10000, error: 'should be a string'}
       errors[1].should.eql {path: 'items[1].price', value: 'foo', error: 'should be a number'}
- 
+
   describe 'arrays of primitives', ->
 
     schema =
       items: [{ match: 'number' }]
-  
+
     it 'valid items', ->
       object =
         items: [1, 2, 3]
@@ -183,3 +183,90 @@ describe 'validate', ->
         items: [1, 'foo', 3]
       errors = validate object, schema
       errors[0].should.eql {path :'items[1]', value: 'foo', error: 'should be a number'}
+
+
+  describe 'schema match', ->
+
+    beforeEach ->
+      @object =
+        name: 'test'
+
+      @auth =
+        id:
+          match: 'number'
+        pw:
+          match: 'string'
+
+      @schema =
+        auth:
+          schema: @auth
+
+    describe 'required', ->
+
+      it 'has required schema object', ->
+        @object.auth =
+          id:  111
+          pw: 'xxx'
+
+        errors = validate @object, @schema
+        errors.should.eql []
+
+      it 'misses required schema object', ->
+        errors = validate @object, @schema
+        errors.should.eql [{path: 'auth', error: 'required'}]
+
+    describe 'optional', ->
+
+      beforeEach ->
+        @schema.auth.optional = true
+
+      it 'has optinal schema object', ->
+        @object.auth =
+          id:  111
+          pw: 'xxx'
+
+        errors = validate @object, @schema
+        errors.should.eql []
+
+      it 'misses optional schema object', ->
+        errors = validate @object, @schema
+        errors.should.eql []
+
+      it 'has optional schema object which is invalid', ->
+        @object.auth =
+           id:  111
+        @schema.auth.optional = true
+
+        errors = validate @object, @schema
+        errors.should.eql [{path: 'auth.pw', error: 'required'}]
+
+      it 'has nested optional schema object which is invalid', ->
+        object =
+          name:     'test'
+          auth:
+            id:     111
+            pw:     'pw'
+            auth2:
+              id:   112
+
+        auth2 =
+          id:
+            match: 'number'
+          pw:
+            match: 'string'
+
+        auth =
+          id:
+            match: 'number'
+          pw:
+            match: 'string'
+          auth2:
+            schema: auth2
+            optional: true
+
+        schema =
+          auth:
+            schema: auth
+
+        errors = validate object, schema
+        errors.should.eql [{path: 'auth.auth2.pw', error: 'required'}]
