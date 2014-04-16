@@ -74,6 +74,20 @@ jsm.validate object,
   age:   { match: 'age', min: 1, max: 100 }
 ```
 
+## Schema
+
+Values can be tested against a defined schema, which contains a default set of matchers. For ex:
+
+```coffee
+auth = 
+  accountNumber: { match: 'integer' }
+  password:      { match: 'string' }
+
+customer =
+  name: { match: 'string' }
+  auth: { schema: auth }
+```
+
 ## Required
 
 By default, all fields in the "schema" are assumed to be required.
@@ -88,6 +102,21 @@ jsm.validate object,
 Validation will ignore missing optional fields, but will run the matcher if an optional field is present.
 E.g. it won't complain if `password` isn't there, but will if `password` is a number.
 
+You could also use optional on a schema match:
+
+```coffee
+account =
+  number:  { match 'integer' }
+  suburb: { match 'string' } 
+  
+jsm.validate object,
+  username: { match: 'string' }
+  password: { match: 'string', optional: true }
+  account: { schema: account, optional: true }
+  
+```
+
+Validation will ignore if `account` node missing, but will run the matcher if `account` node is present. E.g. it will complain if you have the `account` node without presenting the `number` or `suburb` leaf under the account node.
 
 ## Nested configs
 
