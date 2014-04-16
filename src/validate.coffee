@@ -16,20 +16,32 @@ validateHierarchy = (path, obj, schema) ->
   # Testing primitives (no keys)
   if schema.match
     return validateField path, obj, schema
+
   # If the schema has object keys
   return _.map schema, (spec, key) ->
     fullPath = if path then "#{path}.#{key}" else key
+
     # Leaf specification
     if spec.match
       return validateField fullPath, obj[key], spec
+
+    # Leaf schema match
+    if spec.schema
+      if not obj[key]
+        return (if spec.optional then null else {path: fullPath, error: 'required'})
+      else
+        return validateHierarchy fullPath, obj[key], spec.schema
+
     # Nested schema = missing
     if not obj[key]
       return {path: fullPath, error: 'required'}
+
     # Nested schema = array
     if util.isArray spec
       if not util.isArray obj[key]
         return {path: fullPath, error: 'should be an array'}
       return obj[key].map (val, i) -> validateHierarchy "#{fullPath}[#{i}]", val, spec[0]
+
     # Nested schema = object
     return validateHierarchy fullPath, obj[key], spec
 
