@@ -1,5 +1,6 @@
-fs  = require 'fs'
-url = require 'url'
+fs   = require 'fs'
+url  = require 'url'
+util = require 'util'
 
 # NOTE
 # Some checks are clearly not as restrictive as the RFC
@@ -34,7 +35,7 @@ matchUri = (val) ->
   if typeof val != 'string' then return  "should be a URI"
   u = url.parse val
   valid = u.protocol
-  if not valid then return "should be a URI"  
+  if not valid then return "should be a URI"
 
 matchFile = (val) ->
   if not fs.existsSync(val)
@@ -45,19 +46,24 @@ matchDollars = (val) ->
     #TODO have a way of giving examples of valid values (e.g. $10.00)
     'should be a dollar amount'
 
-uuidV4 = (val) ->
+matchUuidV4 = (val) ->
   message = 'should be a UUID Version 4 (xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx)'
   return message unless (typeof val is 'string')
   return message unless val.match REGEX_UUID_V4
 
+matchEnum = (val, options) ->
+  # options are passed automatically by the <validate> module
+  values = options.values
+  return "invalid enum values: #{values}" unless util.isArray(values)
+  return "should be one of [#{values}]" unless values.indexOf(val) != -1
 
 module.exports =
-  
+
   # basic JS types
   'string':  matchType('string')
   'boolean': matchType('boolean')
   'number':  matchType('number')
-  
+
   # advanced validations
   'ip':      matchIp
   'host':    matchHost
@@ -65,4 +71,5 @@ module.exports =
   'uri':     matchUri
   'file':    matchFile
   'dollars': matchDollars
-  'uuid-v4': uuidV4
+  'uuid-v4': matchUuidV4
+  'enum':    matchEnum
