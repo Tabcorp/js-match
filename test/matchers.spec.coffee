@@ -75,15 +75,15 @@ describe 'matchers', ->
   describe 'UUID version 4', ->
     it 'valid (test 1)',             -> should.not.exist m['uuid-v4']('3c8a90dd-11b8-47c3-a88e-67e92b097c7a')
     it 'valid (test 2)',             -> should.not.exist m['uuid-v4']('89c34fa1-0be5-45f6-80a3-84b962f0c699')
-    it 'invalid (not string)',       -> m['uuid-v4'](123).should.include 'should be a UUID Version 4'
-    it 'invalid (wrong format)',     -> m['uuid-v4']('89c34fa10be545f680a384b962f0c699').should.include 'should be a UUID Version 4'
-    it 'invalid (version number)',   -> m['uuid-v4']('89c34fa1-0be5-15f6-80a3-84b962f0c699').should.include 'should be a UUID Version 4'
-    it 'invalid (reserved bits)',    -> m['uuid-v4']('89c34fa1-0be5-45f6-70a3-84b962f0c699').should.include 'should be a UUID Version 4'
+    it 'invalid (not string)',       -> m['uuid-v4'](123).should.containEql 'should be a UUID Version 4'
+    it 'invalid (wrong format)',     -> m['uuid-v4']('89c34fa10be545f680a384b962f0c699').should.containEql 'should be a UUID Version 4'
+    it 'invalid (version number)',   -> m['uuid-v4']('89c34fa1-0be5-15f6-80a3-84b962f0c699').should.containEql 'should be a UUID Version 4'
+    it 'invalid (reserved bits)',    -> m['uuid-v4']('89c34fa1-0be5-45f6-70a3-84b962f0c699').should.containEql 'should be a UUID Version 4'
 
 
   describe 'enum', ->
     it 'valid (string values)',  -> should.not.exist m.enum('silver', values: ['bronze', 'silver', 'gold'])
     it 'valid (int values)',     -> should.not.exist m.enum(2, values: [1, 2, 3])
-    it 'invalid enum config 1',  -> m.enum(2, {}).should.include 'invalid enum values: undefined'
-    it 'invalid enum config 2',  -> m.enum(2, values: 'hi').should.include 'invalid enum values: hi'
-    it 'invalid',                -> m.enum('copper', values: ['bronze', 'silver', 'gold']).should.include 'should be one of [bronze,silver,gold]'
+    it 'invalid enum config 1',  -> m.enum(2, {}).should.containEql 'invalid enum values: undefined'
+    it 'invalid enum config 2',  -> m.enum(2, values: 'hi').should.containEql 'invalid enum values: hi'
+    it 'invalid',                -> m.enum('copper', values: ['bronze', 'silver', 'gold']).should.containEql 'should be one of [bronze,silver,gold]'

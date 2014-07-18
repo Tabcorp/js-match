@@ -2,6 +2,9 @@
 
 [![Build Status](https://travis-ci.org/TabDigital/js-match.svg?branch=master)](https://travis-ci.org/TabDigital/js-match)
 
+[![Dependency Status](https://david-dm.org/TabDigital/js-match.png?theme=shields.io)](https://david-dm.org/TabDigital/js-match) 
+[![devDependency Status](https://david-dm.org/TabDigital/js-match/dev-status.png?theme=shields.io)](https://david-dm.org/TabDigital/js-match#info=devDependencies)
+
 [![NPM](https://nodei.co/npm/js-match.png)](https://nodei.co/npm/js-match/)
 
 Validates an entire Javascript object against a set of nested matchers.
