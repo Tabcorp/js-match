@@ -270,3 +270,22 @@ describe 'validate', ->
 
         errors = validate object, schema
         errors.should.eql [{path: 'auth.auth2.pw', error: 'required'}]
+
+    describe 'custom message', ->
+
+      it 'should return custom message', ->
+        object = message: 42
+        schema = message: { match: 'string', message: 'this is custom' }
+        errors = validate object, schema
+        errors[0].should.eql
+          path: 'message'
+          value: 42
+          error: 'this is custom'
+
+      it 'should not return custom message if field is not present', ->
+        object = {}
+        schema = message: { match: 'string', message: 'this is custom' }
+        errors = validate object, schema
+        errors[0].should.eql
+          path: 'message'
+          error: 'required'
