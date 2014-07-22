@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/TabDigital/js-match.svg?branch=master)](https://travis-ci.org/TabDigital/js-match)
 
-[![Dependency Status](https://david-dm.org/TabDigital/js-match.png?theme=shields.io)](https://david-dm.org/TabDigital/js-match) 
+[![Dependency Status](https://david-dm.org/TabDigital/js-match.png?theme=shields.io)](https://david-dm.org/TabDigital/js-match)
 [![devDependency Status](https://david-dm.org/TabDigital/js-match/dev-status.png?theme=shields.io)](https://david-dm.org/TabDigital/js-match#info=devDependencies)
 
 [![NPM](https://nodei.co/npm/js-match.png)](https://nodei.co/npm/js-match/)
@@ -78,12 +78,29 @@ jsm.validate object,
   age:   { match: 'age', min: 1, max: 100 }
 ```
 
+Matchers can also return custom messages:
+
+```coffee
+person =
+  name: { match: 'string', name: 'this is a custom message' }
+  age:  { match: 'number' }
+
+# success
+errors = jsm.validate {name: 'Bob', age: 30}, person
+errors.should.eql []
+
+# failure
+errors = jsm.validate {name: 12, age: 30}, person
+errors.should.eql [
+  {path: 'name', value: 12, error: 'this is a custom message'}
+]
+```
 ## Nested configs
 
 `js-match` supports nested objects, arrays, and primitives:
 
 ```coffee
-jsm.validate object, 
+jsm.validate object,
   credentials:
     user:  { match: 'string' }
     pass:  { match: 'string' }
@@ -125,7 +142,7 @@ Any errors will be returned with fully qualified paths, for ex:
 You can either nest the matchers directly, like above, or extract them into separate "schemas":
 
 ```coffee
-auth = 
+auth =
   accountNumber: { match: 'integer' }
   password:      { match: 'string' }
 
@@ -153,14 +170,13 @@ You could also use optional on a "schema" matcher:
 ```coffee
 account =
   number:  { match 'integer' }
-  suburb:  { match 'string'  } 
-  
+  suburb:  { match 'string'  }
+
 jsm.validate object,
   username: { match: 'string' }
   password: { match: 'string' }
   account:  { schema: account, optional: true }
-  
+
 ```
 
 Validation will pass if `account` is missing, but will run the matcher if `account` node is present. E.g. it will complain if you have the `account` node without presenting the `number` or `suburb` leaf under the account node.
-

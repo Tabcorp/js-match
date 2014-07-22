@@ -10,7 +10,13 @@ validateField = (path, value, spec) ->
     {path: path, error: "matcher <#{spec.match}> is not defined"}
   else
     error = m(value, spec)
-    if error then {path, value, error} else null
+
+    if error
+      path:  path
+      value: value
+      error: spec.message or error
+    else
+      null
 
 validateHierarchy = (path, obj, schema) ->
   # Testing primitives (no keys)
