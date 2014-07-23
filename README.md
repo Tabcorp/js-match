@@ -1,10 +1,5 @@
 # js-match
 
-[![NPM][npm]](https://npmjs.org/package/js-match)
-[![Dependency Status][dependencies]](https://david-dm.org/TabDigital/js-match)
-[![Build Status][travis]](http://travis-ci.org/TabDigital/js-match)
-
-
 [![NPM](https://nodei.co/npm/js-match.png)](https://nodei.co/npm/js-match/)
 
 Validates an entire Javascript object against a set of nested matchers.
