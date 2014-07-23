@@ -1,9 +1,9 @@
 # js-match
 
-[![Build Status](https://travis-ci.org/TabDigital/js-match.svg?branch=master)](https://travis-ci.org/TabDigital/js-match)
+[![NPM][npm]](https://npmjs.org/package/js-match)
+[![Dependency Status][dependencies]](https://david-dm.org/TabDigital/js-match)
+[![Build Status][travis]](http://travis-ci.org/TabDigital/js-match)
 
-[![Dependency Status](https://david-dm.org/TabDigital/js-match.png?theme=shields.io)](https://david-dm.org/TabDigital/js-match)
-[![devDependency Status](https://david-dm.org/TabDigital/js-match/dev-status.png?theme=shields.io)](https://david-dm.org/TabDigital/js-match#info=devDependencies)
 
 [![NPM](https://nodei.co/npm/js-match.png)](https://nodei.co/npm/js-match/)
 
