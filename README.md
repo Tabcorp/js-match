@@ -1,5 +1,18 @@
 # js-match
 
+[![NPM](http://img.shields.io/npm/v/js-match.svg?style=flat)](https://npmjs.org/package/js-match)
+[![License](http://img.shields.io/npm/l/js-match.svg?style=flat)](https://github.com/TabDigital/js-match)
+
+[![Dependencies](http://img.shields.io/david/TabDigital/js-match.svg?style=flat)](https://david-dm.org/TabDigital/js-match)
+[![Dev dependencies](http://img.shields.io/david/dev/TabDigital/js-match.svg?style=flat)](https://david-dm.org/TabDigital/js-match)
+[![Build Status](http://img.shields.io/travis/TabDigital/js-match.svg?style=flat)](http://travis-ci.org/TabDigital/js-match)
+[![Github issues](http://img.shields.io/github/issues/TabDigital/js-match.svg?style=flat)](https://github.com/TabDigital/js-match/issues)
+
+[npm]: 
+[dependencies]: 
+[coveralls]: http://img.shields.io/coveralls/rkusa/nested-observe.svg?style=flat
+[travis]: 
+
 [![NPM](https://nodei.co/npm/js-match.png)](https://nodei.co/npm/js-match/)
 
 Validates an entire Javascript object against a set of nested matchers.
@@ -171,7 +184,6 @@ jsm.validate object,
   username: { match: 'string' }
   password: { match: 'string' }
   account:  { schema: account, optional: true }
-
 ```
 
 Validation will pass if `account` is missing, but will run the matcher if `account` node is present. E.g. it will complain if you have the `account` node without presenting the `number` or `suburb` leaf under the account node.
