@@ -8,13 +8,6 @@
 [![Build Status](http://img.shields.io/travis/TabDigital/js-match.svg?style=flat)](http://travis-ci.org/TabDigital/js-match)
 [![Github issues](http://img.shields.io/github/issues/TabDigital/js-match.svg?style=flat)](https://github.com/TabDigital/js-match/issues)
 
-[npm]: 
-[dependencies]: 
-[coveralls]: http://img.shields.io/coveralls/rkusa/nested-observe.svg?style=flat
-[travis]: 
-
-[![NPM](https://nodei.co/npm/js-match.png)](https://nodei.co/npm/js-match/)
-
 Validates an entire Javascript object against a set of nested matchers.
 This can be useful to quickly validate:
 
@@ -24,6 +17,10 @@ This can be useful to quickly validate:
 *Note:* `js-match` will always ignore extra fields, as long as the set of matchers passes. This conforms with the robustness principle of "be conservative in what you do, be liberal in what you accept".
 
 ## Basic usage
+
+```
+npm install js-match --save
+```
 
 ```coffee
 jsm = require 'js-match'
