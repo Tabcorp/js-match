@@ -3,7 +3,7 @@
   "version": "1.0.8",
   "description": "Validates an entire Javascript object against a set of nested matchers",
   "author": "Tabcorp Digital Technology Team",
-  "license": "Copyright TabCorp Pty Ltd 2013",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/TabDigital/js-match.git"
