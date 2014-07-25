@@ -3,10 +3,9 @@
 [![NPM](http://img.shields.io/npm/v/js-match.svg?style=flat)](https://npmjs.org/package/js-match)
 [![License](http://img.shields.io/npm/l/js-match.svg?style=flat)](https://github.com/TabDigital/js-match)
 
+[![Build Status](http://img.shields.io/travis/TabDigital/js-match.svg?style=flat)](http://travis-ci.org/TabDigital/js-match)
 [![Dependencies](http://img.shields.io/david/TabDigital/js-match.svg?style=flat)](https://david-dm.org/TabDigital/js-match)
 [![Dev dependencies](http://img.shields.io/david/dev/TabDigital/js-match.svg?style=flat)](https://david-dm.org/TabDigital/js-match)
-[![Build Status](http://img.shields.io/travis/TabDigital/js-match.svg?style=flat)](http://travis-ci.org/TabDigital/js-match)
-[![Github issues](http://img.shields.io/github/issues/TabDigital/js-match.svg?style=flat)](https://github.com/TabDigital/js-match/issues)
 
 Validates an entire Javascript object against a set of nested matchers.
 This can be useful to quickly validate:
