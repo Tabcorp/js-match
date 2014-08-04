@@ -45,18 +45,22 @@ validateHierarchy = (path, obj, schema) ->
       else
         return validateHierarchy fullPath, obj[key], getChildSchema(obj, obj[key], spec)
 
+    # Nested schema = array
+    if util.isArray spec
+      if not obj[key]
+        optional = if (spec[0].match or spec[0].schema) then spec[0].optional else false
+        return (if optional is true then null else {path: fullPath, error: 'required'})
+      else if not util.isArray obj[key]
+        return {path: fullPath, error: 'should be an array'}
+      else
+        return obj[key].map (val, i) ->
+          if spec[0].schema
+            childSchema = getChildSchema(obj, val, spec[0])
+          validateHierarchy "#{fullPath}[#{i}]", val, (childSchema or spec[0])
+
     # Nested schema = missing
     if not obj[key]
       return {path: fullPath, error: 'required'}
-
-    # Nested schema = array
-    if util.isArray spec
-      if not util.isArray obj[key]
-        return {path: fullPath, error: 'should be an array'}
-      return obj[key].map (val, i) ->
-        if spec[0].schema
-          childSchema = getChildSchema(obj, val, spec[0])
-        validateHierarchy "#{fullPath}[#{i}]", val, (childSchema or spec[0])
 
     # Nested schema = object
     return validateHierarchy fullPath, obj[key], spec
