@@ -143,6 +143,8 @@ Any errors will be returned with fully qualified paths, for ex:
 ]
 ```
 
+## Custom schemas
+
 You can either nest the matchers directly, like above, or extract them into separate "schemas":
 
 ```coffee
@@ -153,6 +155,20 @@ auth =
 jsm.validate object,
   name: { match: 'string' }
   auth: { schema: auth }
+```
+
+You can also pass a function that dynamically returns a schema:
+
+```coffee
+dynamic = (parent) ->
+  if parent.type is 'A'
+    { match: 'number' }
+  else
+    { match: 'string' }
+
+jsm.validate object,
+  type:  { match: 'string' }
+  value: { schema: dynamic }
 ```
 
 ## Required and optional fields

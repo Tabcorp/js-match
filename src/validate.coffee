@@ -33,10 +33,15 @@ validateHierarchy = (path, obj, schema) ->
 
     # Leaf schema match
     if spec.schema
+      if typeof spec.schema is 'function'
+        childSchema = spec.schema obj
+      else
+        childSchema = spec.schema
+
       if not obj[key]
         return (if spec.optional then null else {path: fullPath, error: 'required'})
       else
-        return validateHierarchy fullPath, obj[key], spec.schema
+        return validateHierarchy fullPath, obj[key], childSchema
 
     # Nested schema = missing
     if not obj[key]

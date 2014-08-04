@@ -271,6 +271,20 @@ describe 'validate', ->
         errors = validate object, schema
         errors.should.eql [{path: 'auth.auth2.pw', error: 'required'}]
 
+      it 'supports functions that return a schema', ->
+        dynamic = (parent) ->
+          if parent.type is 'A'
+            { match: 'number' }
+          else
+            { match: 'string' }
+        schema =
+          type:  { match: 'string' }
+          thing: { schema: dynamic }
+        errors = validate {type: 'A', thing: 'foo'}, schema
+        errors[0].should.eql {path: 'thing', value: 'foo', error: 'should be a number'}
+        errors = validate {type: 'B', thing: 3}, schema
+        errors[0].should.eql {path: 'thing', value: 3, error: 'should be a string'}
+
     describe 'custom message', ->
 
       it 'should return custom message', ->
