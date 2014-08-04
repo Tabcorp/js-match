@@ -215,6 +215,19 @@ describe 'validate', ->
         errors = validate @object, @schema
         errors.should.eql [{path: 'auth', error: 'required'}]
 
+      it 'supports array of schemas', ->
+        object =
+          name: 'test'
+          auth: [
+            {id: 1, pw: 'A'}
+            {id: 2}
+          ]
+        schema =
+          auth: [schema: @auth]
+        errors = validate object, schema
+        errors.should.eql [{path: 'auth[1].pw', error: 'required'}]
+
+
     describe 'optional', ->
 
       beforeEach ->
@@ -284,6 +297,20 @@ describe 'validate', ->
         errors[0].should.eql {path: 'thing', value: 'foo', error: 'should be a number'}
         errors = validate {type: 'B', thing: 3}, schema
         errors[0].should.eql {path: 'thing', value: 3, error: 'should be a string'}
+
+      it 'supports arrays of schema functions', ->
+        dynamic = (parent) ->
+          if parent.type is 'A'
+            { match: 'number' }
+          else
+            { match: 'string' }
+        schema =
+          type:  { match: 'string' }
+          things: [{ schema: dynamic }]
+        errors = validate {type: 'A', things: [1,'foo']}, schema
+        errors[0].should.eql {path: 'things[1]', value: 'foo', error: 'should be a number'}
+        errors = validate {type: 'B', things: ['foo',3]}, schema
+        errors[0].should.eql {path: 'things[1]', value: 3, error: 'should be a string'}
 
     describe 'custom message', ->
 

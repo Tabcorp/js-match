@@ -18,6 +18,13 @@ validateField = (path, value, spec) ->
     else
       null
 
+getChildSchema = (obj, spec) ->
+  if typeof spec.schema is 'function'
+    spec.schema obj
+  else
+    spec.schema
+
+
 validateHierarchy = (path, obj, schema) ->
   # Testing primitives (no keys)
   if schema.match
@@ -33,15 +40,10 @@ validateHierarchy = (path, obj, schema) ->
 
     # Leaf schema match
     if spec.schema
-      if typeof spec.schema is 'function'
-        childSchema = spec.schema obj
-      else
-        childSchema = spec.schema
-
       if not obj[key]
         return (if spec.optional then null else {path: fullPath, error: 'required'})
       else
-        return validateHierarchy fullPath, obj[key], childSchema
+        return validateHierarchy fullPath, obj[key], getChildSchema(obj, spec)
 
     # Nested schema = missing
     if not obj[key]
@@ -51,7 +53,10 @@ validateHierarchy = (path, obj, schema) ->
     if util.isArray spec
       if not util.isArray obj[key]
         return {path: fullPath, error: 'should be an array'}
-      return obj[key].map (val, i) -> validateHierarchy "#{fullPath}[#{i}]", val, spec[0]
+      return obj[key].map (val, i) ->
+        if spec[0].schema
+          childSchema = getChildSchema(obj, spec[0])
+        validateHierarchy "#{fullPath}[#{i}]", val, (childSchema or spec[0])
 
     # Nested schema = object
     return validateHierarchy fullPath, obj[key], spec
