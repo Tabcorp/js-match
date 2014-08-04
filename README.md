@@ -86,7 +86,7 @@ Matchers can also return custom messages:
 
 ```coffee
 person =
-  name: { match: 'string', name: 'this is a custom message' }
+  name: { match: 'string', message: 'this is a custom message' }
   age:  { match: 'number' }
 
 # success
