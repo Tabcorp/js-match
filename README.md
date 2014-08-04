@@ -160,7 +160,7 @@ jsm.validate object,
 You can also pass a function that dynamically returns a schema:
 
 ```coffee
-dynamic = (parent) ->
+dynamic = (parent, value) ->
   if parent.type is 'A'
     { match: 'number' }
   else
