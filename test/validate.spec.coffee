@@ -241,6 +241,30 @@ describe 'validate', ->
         errors = validate object, schema
         errors.should.eql []
 
+      it 'supports array of schemas with min options', ->
+        object =
+          name: 'test'
+          auth: [
+            {id: 1, pw: 'A'}
+            {id: 2, pw: 'B'}
+          ]
+        schema =
+          auth: [schema: @auth, min: 3]
+        errors = validate object, schema
+        errors.should.eql [path: 'auth', error: 'minimum length is 3']
+
+      it 'supports array of schemas with max options', ->
+        object =
+          name: 'test'
+          auth: [
+            {id: 1, pw: 'A'}
+            {id: 2, pw: 'B'}
+          ]
+        schema =
+          auth: [schema: @auth, max: 1]
+        errors = validate object, schema
+        errors.should.eql [path: 'auth', error: 'maximum length is 1']
+
 
     describe 'optional', ->
 

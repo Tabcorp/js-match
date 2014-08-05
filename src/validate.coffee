@@ -52,6 +52,10 @@ validateHierarchy = (path, obj, schema) ->
         return (if optional is true then null else {path: fullPath, error: 'required'})
       else if not util.isArray obj[key]
         return {path: fullPath, error: 'should be an array'}
+      else if spec[0].schema and spec[0].min and spec[0].min > obj[key].length
+        return {path: fullPath, error: "minimum length is #{spec[0].min}"}
+      else if spec[0].schema and spec[0].max and spec[0].max < obj[key].length
+        return {path: fullPath, error: "maximum length is #{spec[0].max}"}
       else
         return obj[key].map (val, i) ->
           if spec[0].schema
