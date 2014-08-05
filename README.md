@@ -199,3 +199,31 @@ jsm.validate object,
 ```
 
 Validation will pass if `account` is missing, but will run the matcher if `account` node is present. E.g. it will complain if you have the `account` node without presenting the `number` or `suburb` leaf under the account node.
+
+You could also use optional on an array of simple matchers:
+
+```coffee
+jsm.validate object,
+  username: { match: 'string' }
+  password: { match: 'string' }
+  accountIds:  [match: 'number', optional: true ]
+```
+
+Validation will pass if `accountIds` is missing, but will run the matcher if `accountIds` node is present.
+E.g it will complain if `accountIds` is present but is not an array of numbers
+
+You could also use optional on an array of schema:
+
+```coffee
+account =
+  number:  { match 'integer' }
+  suburb:  { match 'string'  }
+
+jsm.validate object,
+  username: { match: 'string' }
+  password: { match: 'string' }
+  accounts: [ schema: account, optional: true ]
+```
+
+Validation will pass if `accounts` is missing, but will run the matcher if `accounts` node is present.
+E.g it will complain if `accounts` is present but is not an array of accounts

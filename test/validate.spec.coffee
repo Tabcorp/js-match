@@ -46,6 +46,12 @@ describe 'validate', ->
       errors = validate object, schema
       errors[0].should.eql {path: 'message', value: 42, error: 'should be a string'}
 
+    it 'can be arrays', ->
+      object = {}
+      schema = messages: [ match: 'string', optional: true]
+      errors = validate object, schema
+      errors.should.eql []
+
 
   describe 'multiple fields in a flat structure', ->
 
@@ -227,13 +233,21 @@ describe 'validate', ->
         errors = validate object, schema
         errors.should.eql [{path: 'auth[1].pw', error: 'required'}]
 
+      it 'supports optional array of schemas', ->
+        object =
+          name: 'test'
+        schema =
+          auth: [schema: @auth, optional: true]
+        errors = validate object, schema
+        errors.should.eql []
+
 
     describe 'optional', ->
 
       beforeEach ->
         @schema.auth.optional = true
 
-      it 'has optinal schema object', ->
+      it 'has optional schema object', ->
         @object.auth =
           id:  111
           pw: 'xxx'
