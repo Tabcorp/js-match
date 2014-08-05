@@ -285,7 +285,7 @@ describe 'validate', ->
         errors.should.eql [{path: 'auth.auth2.pw', error: 'required'}]
 
       it 'supports functions that return a schema', ->
-        dynamic = (parent) ->
+        dynamic = (parent, val) ->
           if parent.type is 'A'
             { match: 'number' }
           else
@@ -297,6 +297,29 @@ describe 'validate', ->
         errors[0].should.eql {path: 'thing', value: 'foo', error: 'should be a number'}
         errors = validate {type: 'B', thing: 3}, schema
         errors[0].should.eql {path: 'thing', value: 3, error: 'should be a string'}
+
+      it 'supports functions that return a schema passing in the parent and value', ->
+        dynamic = (parent, val) ->
+          if val.type is 'A'
+            schemaA
+          else
+            schemaB
+
+        schemaA =
+          type:  { match: 'string' }
+          val: { match: 'number' }
+
+        schemaB =
+          type:  { match: 'string' }
+          val: { match: 'string' }
+
+        schema =
+          thing: { schema: dynamic }
+
+        errors = validate {thing: {type: 'A', val: 'foo'}}, schema
+        errors[0].should.eql {path: 'thing.val', value: 'foo', error: 'should be a number'}
+        errors = validate {thing: {type: 'B', val: 3}}, schema
+        errors[0].should.eql {path: 'thing.val', value: 3, error: 'should be a string'}
 
       it 'supports arrays of schema functions', ->
         dynamic = (parent) ->
@@ -311,6 +334,37 @@ describe 'validate', ->
         errors[0].should.eql {path: 'things[1]', value: 'foo', error: 'should be a number'}
         errors = validate {type: 'B', things: ['foo',3]}, schema
         errors[0].should.eql {path: 'things[1]', value: 3, error: 'should be a string'}
+
+      it 'support array of functions passing in parent and value', ->
+        dynamic = (parent, val) ->
+          if val.type is 'A'
+            schemaA
+          else
+            schemaB
+
+        schemaA =
+          type:  { match: 'string' }
+          thing: { match: 'number' }
+
+        schemaB =
+          type:  { match: 'string' }
+          thing: { match: 'string' }
+
+        schema =
+          things: [{ schema: dynamic }]
+
+        things = [
+          {type: 'A', thing: 1}
+          {type: 'A', thing: 'foo'}
+        ]
+        errors = validate {things}, schema
+        errors[0].should.eql {path: 'things[1].thing', value: 'foo', error: 'should be a number'}
+        things = [
+          {type: 'B', thing: 'foo'}
+          {type: 'B', thing: 3}
+        ]
+        errors = validate {things}, schema
+        errors[0].should.eql {path: 'things[1].thing', value: 3, error: 'should be a string'}
 
     describe 'custom message', ->
 

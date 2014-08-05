@@ -18,9 +18,9 @@ validateField = (path, value, spec) ->
     else
       null
 
-getChildSchema = (obj, spec) ->
+getChildSchema = (parent, obj, spec) ->
   if typeof spec.schema is 'function'
-    spec.schema obj
+    spec.schema parent, obj
   else
     spec.schema
 
@@ -43,7 +43,7 @@ validateHierarchy = (path, obj, schema) ->
       if not obj[key]
         return (if spec.optional then null else {path: fullPath, error: 'required'})
       else
-        return validateHierarchy fullPath, obj[key], getChildSchema(obj, spec)
+        return validateHierarchy fullPath, obj[key], getChildSchema(obj, obj[key], spec)
 
     # Nested schema = missing
     if not obj[key]
@@ -55,7 +55,7 @@ validateHierarchy = (path, obj, schema) ->
         return {path: fullPath, error: 'should be an array'}
       return obj[key].map (val, i) ->
         if spec[0].schema
-          childSchema = getChildSchema(obj, spec[0])
+          childSchema = getChildSchema(obj, val, spec[0])
         validateHierarchy "#{fullPath}[#{i}]", val, (childSchema or spec[0])
 
     # Nested schema = object
