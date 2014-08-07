@@ -200,6 +200,10 @@ jsm.validate object,
 
 Validation will pass if `account` is missing, but will run the matcher if `account` node is present. E.g. it will complain if you have the `account` node without presenting the `number` or `suburb` leaf under the account node.
 
+## Arrays
+
+You can also do more complex matching on arrays
+
 You could also use optional on an array of simple matchers:
 
 ```coffee
@@ -227,3 +231,19 @@ jsm.validate object,
 
 Validation will pass if `accounts` is missing, but will run the matcher if `accounts` node is present.
 E.g it will complain if `accounts` is present but is not an array of accounts
+
+You could specify the min and max length of an array of schema:
+
+```coffee
+account =
+  number:  { match 'integer' }
+  suburb:  { match 'string'  }
+
+jsm.validate object,
+  username: { match: 'string' }
+  password: { match: 'string' }
+  accounts: [ schema: account, min: 2, max: 5 ]
+```
+
+Validation will pass if `accounts` is an array of accounts. With length 2-5
+E.g it will complain if `accounts` is an array of 6 accounts.
