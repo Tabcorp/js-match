@@ -1,5 +1,15 @@
 # js-match
 
+---
+
+![Warning](http://img.shields.io/badge/WARNING-Deprecated-orange.svg)
+
+This project is now deprecated, in favour of [strummer](https://github.com/TabDigital/strummer).
+`Strummer` has a similiar syntax (porting shouldn't be too hard), but is less ambiguous / more flexible.
+
+---
+
+
 [![NPM](http://img.shields.io/npm/v/js-match.svg?style=flat)](https://npmjs.org/package/js-match)
 [![License](http://img.shields.io/npm/l/js-match.svg?style=flat)](https://github.com/TabDigital/js-match)
 
