@@ -1,7 +1,5 @@
 # js-match
 
----
-
 ![Warning](http://img.shields.io/badge/WARNING-Deprecated-orange.svg)
 
 This project is now deprecated, in favour of [strummer](https://github.com/TabDigital/strummer).
